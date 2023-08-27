@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,10 +10,66 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
+import { useState } from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { Link } from "react-router-dom";
+
+const sidebarMenuItems = [
+  {
+    id: 1,
+    label: "Oders",
+    icon: <LocalMallIcon />,
+    route: "/orders",
+  },
+  {
+    id: 2,
+    label: "Menus",
+    icon: <RestaurantMenuIcon />,
+    route: "/menus",
+  },
+  {
+    id: 3,
+    label: "Menu Categories",
+    icon: <MenuBookIcon />,
+    route: "/menu-categories",
+  },
+  {
+    id: 4,
+    label: "Addons",
+    icon: <LunchDiningIcon />,
+    route: "/addons",
+  },
+  {
+    id: 5,
+    label: "Addons Categories",
+    icon: <RestaurantIcon />,
+    route: "/addon-categories",
+  },
+  {
+    id: 6,
+    label: "Settings",
+    icon: <SettingsIcon />,
+    route: "/settings",
+  },
+];
 
 const NavBar = () => {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState(false);
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -28,6 +83,61 @@ const NavBar = () => {
     setAnchorEl(null);
   };
 
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setOpen(open);
+    };
+
+  const renderDrawer = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        {sidebarMenuItems.slice(0, 5).map((item) => (
+          <Link
+            to={item.route}
+            key={item.id}
+            style={{ textDecoration: "none", color: "#313131" }}
+          >
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {sidebarMenuItems.slice(-1).map((item) => (
+          <Link
+            to={item.route}
+            key={item.id}
+            style={{ textDecoration: "none", color: "#313131" }}
+          >
+            <ListItem key={item.id} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -38,6 +148,9 @@ const NavBar = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => {
+              setOpen(true);
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -78,6 +191,16 @@ const NavBar = () => {
           )}
         </Toolbar>
       </AppBar>
+      <Box>
+        <Drawer
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          {renderDrawer()}
+        </Drawer>
+      </Box>
     </Box>
   );
 };

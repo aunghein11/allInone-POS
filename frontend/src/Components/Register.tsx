@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "./Layout";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -21,39 +22,41 @@ const Register = () => {
     console.log(data);
   };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        margin: "0 auto",
-        maxWidth: "300px",
-        mt: 5,
-      }}
-    >
-      <TextField
-        label="Name"
-        variant="outlined"
-        sx={{ mb: 3 }}
-        onChange={(evt) => setUser({ ...user, name: evt.target.value })}
-      />
-      <TextField
-        type="email"
-        label="Email"
-        variant="outlined"
-        sx={{ mb: 3 }}
-        onChange={(evt) => setUser({ ...user, email: evt.target.value })}
-      />
-      <TextField
-        type="password"
-        label="Password"
-        variant="outlined"
-        sx={{ mb: 3 }}
-        onChange={(evt) => setUser({ ...user, password: evt.target.value })}
-      />
-      <Button variant="contained" onClick={userRegister}>
-        REGISTER
-      </Button>
-    </Box>
+    <Layout>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "0 auto",
+          maxWidth: "300px",
+          mt: 5,
+        }}
+      >
+        <TextField
+          label="Name"
+          variant="outlined"
+          sx={{ mb: 3 }}
+          onChange={(evt) => setUser({ ...user, name: evt.target.value })}
+        />
+        <TextField
+          type="email"
+          label="Email"
+          variant="outlined"
+          sx={{ mb: 3 }}
+          onChange={(evt) => setUser({ ...user, email: evt.target.value })}
+        />
+        <TextField
+          type="password"
+          label="Password"
+          variant="outlined"
+          sx={{ mb: 3 }}
+          onChange={(evt) => setUser({ ...user, password: evt.target.value })}
+        />
+        <Button variant="contained" onClick={userRegister}>
+          REGISTER
+        </Button>
+      </Box>
+    </Layout>
   );
 };
 

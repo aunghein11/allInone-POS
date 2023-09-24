@@ -4,13 +4,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import { useState } from "react";
 import List from "@mui/material/List";
@@ -25,14 +18,14 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const sidebarMenuItems = [
   {
     id: 1,
-    label: "Oders",
+    label: "Orders",
     icon: <LocalMallIcon />,
-    route: "/orders",
+    route: "/",
   },
   {
     id: 2,
@@ -58,6 +51,7 @@ const sidebarMenuItems = [
     icon: <RestaurantIcon />,
     route: "/addon-categories",
   },
+
   {
     id: 6,
     label: "Settings",
@@ -66,10 +60,17 @@ const sidebarMenuItems = [
   },
 ];
 
-const NavBar = () => {
+interface Props {
+  title?: string;
+}
+
+const NavBar = ({ title }: Props) => {
+  const acccessToken = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navBarTitle = title ? `All In One POS - ${title}` : "All In One POS";
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -139,9 +140,9 @@ const NavBar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <IconButton
             size="large"
             edge="start"
@@ -154,40 +155,32 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            All In One - POS
+          <Typography variant="h6" component="div">
+            {navBarTitle}
           </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
+          {acccessToken ? (
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ cursor: "pointer", textDecoration: "none" }}
+              onClick={() => {
+                localStorage.removeItem("accessToken");
+                navigate("/logout");
+              }}
+            >
+              Log Out
+            </Typography>
+          ) : (
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ cursor: "pointer", textDecoration: "none" }}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              {window.location.pathname === "/login" ? "" : "Log In"}
+            </Typography>
           )}
         </Toolbar>
       </AppBar>

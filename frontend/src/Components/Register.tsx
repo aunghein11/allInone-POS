@@ -2,15 +2,19 @@ import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "./Layout";
+import { config } from "../config/config";
 
 const Register = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ name: "", email: "", password: "" });
+  const accessToken = localStorage.getItem("accessToken");
 
   const userRegister = async () => {
-    const response = await fetch("http://localhost:5000/auth/register", {
+    console.log("hello userRegister");
+    const response = await fetch(`${config.apiBaseUrl}/auth/register`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),

@@ -1,11 +1,12 @@
-import NavBar from "./NavBar";
+import Layout from "./Layout";
 
 const Settings = () => {
   return (
-    <div>
-      <NavBar />
-      <h1>Settings page</h1>
-    </div>
+    <Layout title="Settings">
+      <div>
+        <h1>Settings page</h1>
+      </div>
+    </Layout>
   );
 };
 

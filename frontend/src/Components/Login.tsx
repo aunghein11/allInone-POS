@@ -1,14 +1,15 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
+import { config } from "../config/config";
 
 const Login = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ email: "", password: "" });
 
   const userLogin = async () => {
-    const response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch(`${config.apiBaseUrl}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,6 +53,9 @@ const Login = () => {
         <Button variant="contained" onClick={userLogin}>
           LOG IN
         </Button>
+        <Link to="/register" style={{ marginTop: "20px", textAlign: "center" }}>
+          <Typography>If you are not registered, click here..</Typography>
+        </Link>
       </Box>
     </Layout>
   );

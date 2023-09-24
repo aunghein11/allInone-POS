@@ -1,11 +1,12 @@
-import NavBar from "./NavBar";
+import Layout from "./Layout";
 
 const AddonCategories = () => {
   return (
-    <div>
-      <NavBar />
-      <h1>Addon Categories page</h1>
-    </div>
+    <Layout title="Addon Categories">
+      <div>
+        <h1>Addon Categories page</h1>
+      </div>
+    </Layout>
   );
 };
 

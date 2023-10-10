@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -16,9 +16,11 @@ import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { Link, useNavigate } from "react-router-dom";
+import { config } from "../config/config";
 
 const sidebarMenuItems = [
   {
@@ -51,9 +53,14 @@ const sidebarMenuItems = [
     icon: <RestaurantIcon />,
     route: "/addon-categories",
   },
-
   {
     id: 6,
+    label: "Locations",
+    icon: <LocationOnIcon />,
+    route: "/locations",
+  },
+  {
+    id: 7,
     label: "Settings",
     icon: <SettingsIcon />,
     route: "/settings",
@@ -65,7 +72,8 @@ interface Props {
 }
 
 const NavBar = ({ title }: Props) => {
-  const acccessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("accessToken");
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useState(true);
@@ -104,7 +112,7 @@ const NavBar = ({ title }: Props) => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {sidebarMenuItems.slice(0, 5).map((item) => (
+        {sidebarMenuItems.slice(0, 6).map((item) => (
           <Link
             to={item.route}
             key={item.id}
@@ -158,7 +166,7 @@ const NavBar = ({ title }: Props) => {
           <Typography variant="h6" component="div">
             {navBarTitle}
           </Typography>
-          {acccessToken ? (
+          {accessToken ? (
             <Typography
               variant="h6"
               component="div"

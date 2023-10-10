@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useContext, useEffect } from "react";
+import { AppContext } from "./components/AppContext";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,6 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Layout from "./components/Layout";
+import { useNavigate } from "react-router-dom";
+import { config } from "./config/config";
+import CheckBoxAutocomplete from "./components/CheckBoxAutocomplete";
+import Box from "@mui/material/Box";
 
 function createData(
   name: string,
@@ -27,8 +32,39 @@ const rows = [
 ];
 
 export default function App() {
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (accessToken) {
+      fetchData();
+    }
+  }, [accessToken]);
+
+  const fetchData = async () => {
+    console.log(config);
+    const response = await fetch(`${config.apiBaseUrl}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const responseJson = await response.json();
+
+    console.log("data from server", responseJson);
+  };
   return (
     <Layout>
+      <Box
+        sx={{
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h2>Autocomplete</h2>
+        <CheckBoxAutocomplete />
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

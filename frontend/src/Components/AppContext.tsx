@@ -9,6 +9,7 @@ import {
   Location,
 } from "./typings/Type";
 import { config } from "../config/config";
+import { useNavigate } from "react-router-dom";
 
 interface AppContextType {
   menus: Menu[];
@@ -87,3 +88,6 @@ const AppProvider = (props: any) => {
 };
 
 export default AppProvider;
+function clockUpdate(): import("react").SetStateAction<string> {
+  throw new Error("Function not implemented.");
+}

@@ -1,10 +1,13 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import { config } from "../config/config";
+import { AppContext } from "./AppContext";
 
 const Login = () => {
+  const { fetchData } = useContext(AppContext);
+
   const navigate = useNavigate();
   const [user, setUser] = useState({ email: "", password: "" });
 
@@ -20,6 +23,7 @@ const Login = () => {
       const responseData = await response.json();
       const accessToken = responseData.accessToken;
       localStorage.setItem("accessToken", accessToken);
+
       navigate("/");
     }
     // const data = await response.json();

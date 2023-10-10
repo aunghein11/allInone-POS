@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Layout from "./Layout";
 
 import {
@@ -12,7 +12,9 @@ import {
 import { AppContext } from "./AppContext";
 
 const Menus = () => {
-  const { menus } = useContext(AppContext);
+  const accessToken = localStorage.getItem("accessToken");
+  const { fetchData, menus } = useContext(AppContext);
+  console.log("menus", menus);
 
   const sampleMenuImageUrl =
     "https://msquarefdc.sgp1.cdn.digitaloceanspaces.com/Spicy%20seasoned%20seafood%20noodles.png";
@@ -45,7 +47,6 @@ const Menus = () => {
           );
         })}
       </Box>
-      <h1>hello</h1>
     </Layout>
   );
 };

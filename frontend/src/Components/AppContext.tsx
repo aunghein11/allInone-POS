@@ -4,9 +4,10 @@ import {
   MenuCategory,
   Addon,
   AddonCategory,
-  MenuLocation,
+  MenusMenuCategoryLocation,
   Company,
   Location,
+  Table,
 } from "./typings/Type";
 import { config } from "../config/config";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,8 @@ interface AppContextType {
   addons: Addon[];
   addonCategories: AddonCategory[];
   locations: Location[];
-  menuLocations: MenuLocation[];
+  tables: Table[];
+  menusMenuCategoriesLocations: MenusMenuCategoryLocation[];
   company: Company | null;
   updateData: (value: any) => void;
   fetchData: () => void;
@@ -29,7 +31,8 @@ export const defaultContext: AppContextType = {
   addons: [],
   addonCategories: [],
   locations: [],
-  menuLocations: [],
+  tables: [],
+  menusMenuCategoriesLocations: [],
   company: null,
   updateData: () => {},
   fetchData: () => {},
@@ -49,7 +52,6 @@ const AppProvider = (props: any) => {
   }, [accessToken]);
 
   const fetchData = async () => {
-    console.log(config);
     const response = await fetch(`${config.apiBaseUrl}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -65,7 +67,8 @@ const AppProvider = (props: any) => {
       addons,
       addonCategories,
       locations,
-      menuLocations,
+      tables,
+      menusMenuCategoriesLocations,
       company,
     } = responseJson;
     updateData({
@@ -75,7 +78,8 @@ const AppProvider = (props: any) => {
       addons,
       addonCategories,
       locations,
-      menuLocations,
+      tables,
+      menusMenuCategoriesLocations,
       company,
     });
   };

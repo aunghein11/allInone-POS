@@ -11,6 +11,7 @@ import Login from "../Login";
 import Register from "../Register";
 import Logout from "../Logout";
 import CreateMenus from "../CreateMenus";
+import Tables from "../Tables";
 
 const Routers = () => {
   return (
@@ -23,6 +24,7 @@ const Routers = () => {
           <Route path="/addons" Component={Addons} />
           <Route path="/addon-categories" Component={AddonCategories} />
           <Route path="/menu-categories" Component={MenuCategories} />
+          <Route path="/tables" Component={Tables} />
           <Route path="/locations" Component={Locations} />
           <Route path="/settings" Component={Settings} />
         </Route>

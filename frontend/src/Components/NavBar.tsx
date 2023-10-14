@@ -20,7 +20,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { Link, useNavigate } from "react-router-dom";
-import { config } from "../config/config";
+import TableBarIcon from "@mui/icons-material/TableBar";
 
 const sidebarMenuItems = [
   {
@@ -55,12 +55,18 @@ const sidebarMenuItems = [
   },
   {
     id: 6,
+    label: "Tables",
+    icon: <TableBarIcon />,
+    route: "/tables",
+  },
+  {
+    id: 7,
     label: "Locations",
     icon: <LocationOnIcon />,
     route: "/locations",
   },
   {
-    id: 7,
+    id: 8,
     label: "Settings",
     icon: <SettingsIcon />,
     route: "/settings",
@@ -112,7 +118,7 @@ const NavBar = ({ title }: Props) => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {sidebarMenuItems.slice(0, 6).map((item) => (
+        {sidebarMenuItems.slice(0, 7).map((item) => (
           <Link
             to={item.route}
             key={item.id}

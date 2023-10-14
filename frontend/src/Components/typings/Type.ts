@@ -28,9 +28,10 @@ export interface Location extends BaseType {
   address?: string;
 }
 
-export interface MenuLocation {
+export interface MenusMenuCategoryLocation {
   id: number;
   menus_id: number;
+  menu_categories_id: number;
   locations_id: number;
   is_available: boolean;
 }
@@ -39,4 +40,8 @@ export interface Company {
   id?: string;
   name: string;
   address: string;
+}
+
+export interface Table extends BaseType {
+  locations_id: number;
 }

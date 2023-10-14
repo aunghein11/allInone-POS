@@ -10,7 +10,6 @@ const Layout = ({ children, title }: Props) => {
   return (
     <div>
       <NavBar title={title} />
-
       {children}
     </div>
   );

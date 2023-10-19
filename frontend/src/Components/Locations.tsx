@@ -19,7 +19,7 @@ const Locations = () => {
     console.log("newLocation", newLocation);
   };
 
-  const createLocation = async () => {
+  const createLocation = async (accessToken: string) => {
     await fetch(`${config.apiBaseUrl}/locations`, {
       method: "POST",
       headers: {
@@ -29,7 +29,7 @@ const Locations = () => {
       body: JSON.stringify(newLocation),
     });
     setNewLocation({ name: "", address: "", companyId: company?.id });
-    fetchData();
+    fetchData(accessToken);
   };
 
   return (
@@ -67,7 +67,10 @@ const Locations = () => {
             setNewLocation({ ...newLocation, address: event.target.value });
           }}
         />
-        <Button variant="contained" onClick={createLocation}>
+        <Button
+          variant="contained"
+          onClick={() => createLocation(accessToken as string)}
+        >
           Create
         </Button>
       </Box>

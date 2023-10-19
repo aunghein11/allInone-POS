@@ -8,21 +8,25 @@ import {
   Company,
   Location,
   Table,
+  MenuAddonCategory,
 } from "./typings/Type";
 import { config } from "../config/config";
 import { useNavigate } from "react-router-dom";
+import { getSelectedLocationId } from "../utils";
+import Locations from "./Locations";
 
 interface AppContextType {
   menus: Menu[];
   menuCategories: MenuCategory[];
   addons: Addon[];
   addonCategories: AddonCategory[];
+  menusAddonCategories: MenuAddonCategory[];
   locations: Location[];
   tables: Table[];
   menusMenuCategoriesLocations: MenusMenuCategoryLocation[];
   company: Company | null;
   updateData: (value: any) => void;
-  fetchData: () => void;
+  fetchData: (accessToken: string) => void;
 }
 
 export const defaultContext: AppContextType = {
@@ -30,6 +34,7 @@ export const defaultContext: AppContextType = {
   menuCategories: [],
   addons: [],
   addonCategories: [],
+  menusAddonCategories: [],
   locations: [],
   tables: [],
   menusMenuCategoriesLocations: [],
@@ -47,11 +52,14 @@ const AppProvider = (props: any) => {
 
   useEffect(() => {
     if (accessToken) {
-      fetchData();
+      fetchData(accessToken);
     }
   }, [accessToken]);
 
-  const fetchData = async () => {
+  const fetchData = async (accessToken: string) => {
+    if (!accessToken) {
+      return;
+    }
     const response = await fetch(`${config.apiBaseUrl}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -59,13 +67,12 @@ const AppProvider = (props: any) => {
     });
     const responseJson = await response.json();
 
-    console.log("data from server", responseJson);
-
     const {
       menus,
       menuCategories,
       addons,
       addonCategories,
+      menusAddonCategories,
       locations,
       tables,
       menusMenuCategoriesLocations,
@@ -77,11 +84,16 @@ const AppProvider = (props: any) => {
       menuCategories,
       addons,
       addonCategories,
+      menusAddonCategories,
       locations,
       tables,
       menusMenuCategoriesLocations,
       company,
     });
+    const selectedLocationId = getSelectedLocationId();
+    if (!selectedLocationId) {
+      localStorage.setItem("selectedLocationId", locations[0].id);
+    }
   };
 
   return (

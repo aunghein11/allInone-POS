@@ -12,6 +12,7 @@ import Register from "../Register";
 import Logout from "../Logout";
 import CreateMenus from "../CreateMenus";
 import Tables from "../Tables";
+import EditMenuCategories from "../EditMenuCategories";
 
 const Routers = () => {
   return (
@@ -24,6 +25,7 @@ const Routers = () => {
           <Route path="/addons" Component={Addons} />
           <Route path="/addon-categories" Component={AddonCategories} />
           <Route path="/menu-categories" Component={MenuCategories} />
+          <Route path="/menu-categories/:id" Component={EditMenuCategories} />
           <Route path="/tables" Component={Tables} />
           <Route path="/locations" Component={Locations} />
           <Route path="/settings" Component={Settings} />

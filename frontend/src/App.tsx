@@ -9,8 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Layout from "./components/Layout";
 import { useNavigate } from "react-router-dom";
-import { config } from "./config/config";
-import CheckBoxAutocomplete from "./components/CheckBoxAutocomplete";
 import Box from "@mui/material/Box";
 
 function createData(
@@ -33,25 +31,15 @@ const rows = [
 
 export default function App() {
   const navigate = useNavigate();
+  const { fetchData } = useContext(AppContext);
   const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (accessToken) {
-      fetchData();
+      fetchData(accessToken);
     }
   }, [accessToken]);
 
-  const fetchData = async () => {
-    console.log(config);
-    const response = await fetch(`${config.apiBaseUrl}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const responseJson = await response.json();
-
-    console.log("data from server", responseJson);
-  };
   return (
     <Layout>
       <Box
@@ -63,7 +51,6 @@ export default function App() {
         }}
       >
         <h2>Autocomplete</h2>
-        <CheckBoxAutocomplete />
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

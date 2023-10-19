@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Layout from "./Layout";
 import { useState, useContext } from "react";
-import { getAccessToken, getSelectedLocationId } from "../utils/generals";
+import { getAccessToken, getSelectedLocationId } from "../utils";
 import { AppContext } from "./AppContext";
 import { config } from "../config/config";
 

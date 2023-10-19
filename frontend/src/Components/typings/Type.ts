@@ -15,8 +15,7 @@ export interface MenuCategory extends BaseType {}
 
 export interface Addon extends BaseType {
   price: number;
-  isAvailable: boolean;
-  addonCategoriesIds: string[];
+  addon_categories_id: number;
 }
 
 export interface AddonCategory extends BaseType {
@@ -24,7 +23,7 @@ export interface AddonCategory extends BaseType {
 }
 
 export interface Location extends BaseType {
-  companyId?: string;
+  companies_id: string;
   address?: string;
 }
 
@@ -34,6 +33,7 @@ export interface MenusMenuCategoryLocation {
   menu_categories_id: number;
   locations_id: number;
   is_available: boolean;
+  is_archived: boolean;
 }
 
 export interface Company {
@@ -44,4 +44,10 @@ export interface Company {
 
 export interface Table extends BaseType {
   locations_id: number;
+}
+
+export interface MenuAddonCategory {
+  id: number;
+  menus_id: number;
+  addon_categories_id: number;
 }
